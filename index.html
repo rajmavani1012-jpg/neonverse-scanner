@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>NEONVERSE 2027 – Gate Scanner</title><meta charset="utf-8"><style>
+:root{--bg:#05030a;--panel:#0e0a1a;--panel2:#151027;--line:#2a2145;--purple:#b026ff;--blue:#00b3ff;--green:#39ff14;--red:#ff2d55;--amber:#ffb800;--text:#eae6ff;--muted:#9d93c4}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px}
+body{background:radial-gradient(circle at 15% 0%,rgba(176,38,255,.18),transparent 45%),radial-gradient(circle at 90% 10%,rgba(0,179,255,.14),transparent 40%),var(--bg);min-height:100vh}
+a{color:var(--blue)}
+.brand{font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,var(--purple),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:var(--muted);letter-spacing:2px;font-size:11px}
+.wrap{max-width:1200px;margin:0 auto;padding:14px}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:0 0 24px rgba(176,38,255,.08)}
+.center{max-width:420px;margin:8vh auto}
+h1,h2,h3{margin:0 0 10px}
+h2{font-size:18px}h3{font-size:15px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 4px;text-transform:uppercase;letter-spacing:1px}
+input,select,textarea{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0a0714;color:var(--text);font-size:16px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--purple);box-shadow:0 0 0 2px rgba(176,38,255,.3)}
+.btn{display:inline-block;border:0;border-radius:10px;padding:12px 16px;font-weight:700;font-size:15px;cursor:pointer;color:#fff;background:linear-gradient(90deg,var(--purple),var(--blue));text-decoration:none;text-align:center;margin:4px 4px 4px 0}
+.btn:disabled{opacity:.5}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+.btn.red{background:var(--red)}.btn.green{background:#14a800}.btn.amber{background:#b38000}
+.btn.block{display:block;width:100%}
+.btn.sm{padding:7px 10px;font-size:13px}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px;position:relative;overflow:hidden}
+.stat .v{font-size:26px;font-weight:800}.stat .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.stat:before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--purple));box-shadow:0 0 12px var(--c,var(--purple))}
+.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1 1 150px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--muted);font-size:11px;text-transform:uppercase}
+tr.click{cursor:pointer}tr.click:hover{background:rgba(176,38,255,.08)}
+.tbl{overflow-x:auto}
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid}
+.p-green{color:var(--green);border-color:var(--green)}.p-red{color:var(--red);border-color:var(--red)}
+.p-amber{color:var(--amber);border-color:var(--amber)}.p-blue{color:var(--blue);border-color:var(--blue)}.p-purple{color:var(--purple);border-color:var(--purple)}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px}
+.tabs button{flex:0 0 auto;background:var(--panel2);border:1px solid var(--line);color:var(--text);padding:10px 14px;border-radius:10px;font-weight:600}
+.tabs button.on{border-color:var(--purple);box-shadow:0 0 10px rgba(176,38,255,.5);color:#fff}
+.bar{height:12px;background:#1d1636;border-radius:6px;overflow:hidden}.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--blue))}
+.hidden{display:none!important}
+.muted{color:var(--muted)}.small{font-size:12px}
+.err{color:var(--red);margin-top:8px;font-weight:600}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#1b1430;border:1px solid var(--purple);padding:12px 18px;border-radius:12px;z-index:999;max-width:90vw}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:50;overflow:auto;padding:12px}
+.modal .card{max-width:720px;margin:20px auto}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.qrbox{background:#fff;padding:10px;border-radius:10px;display:inline-block}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid var(--muted);border-top-color:var(--blue);border-radius:50%;animation:sp 1s linear infinite;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<style>
+#reader{width:100%;border-radius:14px;overflow:hidden;background:#000;min-height:60px}
+#reader video{border-radius:14px}
+.bigbtn{font-size:22px;padding:22px;border-radius:16px}
+#result{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:20px}
+#result.SUCCESS{background:#0b5e00}#result.ALREADY_USED,#result.INVALID,#result.CANCELLED{background:#8a0018}
+#result.PAYMENT_PENDING,#result.BUSY{background:#7a5300}
+#result .big{font-size:44px;font-weight:900;letter-spacing:2px;line-height:1.1}
+#result .icon{font-size:90px;line-height:1}
+#result .info{background:rgba(0,0,0,.35);border-radius:14px;padding:14px;margin:16px 0;width:100%;max-width:420px;text-align:left;font-size:17px}
+#result .info div{padding:3px 0}
+#result .persons{font-size:30px;font-weight:900}
+</style></head>
+<body>
+<div class="wrap" style="max-width:520px">
+  <div class="top"><div><div class="brand" style="font-size:20px">NEONVERSE 2027</div><div class="tag">GATE SCANNER</div></div>
+    <div id="who" class="small muted"></div></div>
+
+  <div class="card" id="loginCard">
+    <h2>Bouncer Login</h2>
+    <label>Gate username</label>
+    <select id="u"><option>NV-GATE-01</option><option>NV-GATE-02</option><option>NV-GATE-03</option><option>NV-GATE-04</option><option value="__other">Other…</option></select>
+    <input id="uOther" class="hidden" placeholder="Username" autocomplete="off" style="margin-top:6px">
+    <label>Password</label><input id="p" type="password" autocomplete="current-password">
+    <button class="btn block bigbtn" id="loginBtn">LOG IN</button>
+    <div class="err" id="loginErr"></div>
+  </div>
+
+  <div id="scanUI" class="hidden">
+    <div class="card" style="padding:10px">
+      <div id="reader"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn block bigbtn" id="startBtn">📷 START SCAN</button>
+      </div>
+      <div class="row">
+        <button class="btn ghost hidden" id="torchBtn">🔦 Flashlight</button>
+        <button class="btn ghost hidden" id="stopBtn">■ Stop camera</button>
+        <label class="btn ghost" style="margin:4px 0;text-transform:none;font-size:15px;color:var(--text)">📸 Photo of QR<input type="file" accept="image/*" capture="environment" id="photo" class="hidden"></label>
+      </div>
+      <div id="camMsg" class="small muted"></div>
+    </div>
+    <div class="card">
+      <h3>Manual entry (if camera fails)</h3>
+      <input id="manual" placeholder="Ticket ID e.g. NV27-AB12CD" autocomplete="off" style="text-transform:uppercase">
+      <button class="btn block bigbtn" id="manualBtn" style="margin-top:8px">CHECK TICKET</button>
+    </div>
+    <div class="card">
+      <div class="row"><div class="stat" style="--c:var(--green)"><div class="v" id="gPeople">0</div><div class="k">People admitted (this gate)</div></div>
+      <div class="stat" style="--c:var(--blue)"><div class="v" id="gScans">0</div><div class="k">Tickets scanned OK</div></div>
+      <div class="stat" style="--c:var(--red)"><div class="v" id="gRej">0</div><div class="k">Rejected</div></div></div>
+      <div class="tbl" style="margin-top:10px"><table><tbody id="gRecent"></tbody></table></div>
+      <button class="btn ghost sm" id="refreshBtn">Refresh</button>
+      <button class="btn ghost sm" id="logoutBtn">Log out</button>
+    </div>
+  </div>
+</div>
+<div id="result" class="hidden"></div>
+<div id="filereader" class="hidden"></div>
+
+<script>
+/* Shared client helpers. No secrets here: all checks happen on the server. */
+var API_URL = 'https://script.google.com/macros/s/AKfycbzn2eSJ8us_engA3i1aKqk09xIfI5CBYi1KS3WN0J2XHWpy2Wqhsyi3hzAudVSUKdg/exec';
+function call(fn) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  return fetch(API_URL, { method: 'POST', redirect: 'follow', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ fn: fn, args: args }) })
+    .then(function (r) { if (!r.ok) throw new Error('Server error ' + r.status); return r.json(); },
+          function () { throw new Error('Network error – internet check karo ane fari try karo.'); })
+    .then(function (d) {
+      if (d && d.ok) return d.result;
+      var msg = (d && d.error) ? String(d.error) : 'Unknown server error';
+      if (msg.indexOf('AUTH:') >= 0 && window.onAuthLost) window.onAuthLost(msg);
+      throw new Error(msg.replace(/^Error:\s*/, ''));
+    });
+}
+function esc(s) {
+  return String(s === undefined || s === null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+function $(id) { return document.getElementById(id); }
+function toast(msg, ms) {
+  var t = $('toast'); if (!t) { t = document.createElement('div'); t.id = 'toast'; document.body.appendChild(t); }
+  t.textContent = msg; t.classList.remove('hidden');
+  clearTimeout(window.__tt); window.__tt = setTimeout(function () { t.classList.add('hidden'); }, ms || 3000);
+}
+function rupee(n) { return '\u20B9' + Number(n || 0).toLocaleString('en-IN'); }
+function pill(v) {
+  var map = { PAID: 'green', USED: 'blue', NOT_ENTERED: 'purple', PENDING: 'amber', ACTIVE: 'green', CANCELLED: 'red',
+    SUCCESS: 'green', ALREADY_USED: 'red', INVALID: 'red', PAYMENT_PENDING: 'amber', ADMIN_MARKED_USED: 'blue', ADMIN_RESET_ENTRY: 'amber', BUSY: 'amber' };
+  return '<span class="pill p-' + (map[v] || 'purple') + '">' + esc(String(v).replace(/_/g, ' ')) + '</span>';
+}
+</script>
+
+<script>
+var TOKEN_KEY = 'nv27_scan_token';
+var token = sessionStorage.getItem(TOKEN_KEY) || '';
+var qr = null, scanning = false, busy = false, torchOn = false;
+
+window.onAuthLost = function (msg) { sessionStorage.removeItem(TOKEN_KEY); token = ''; showLogin(msg); };
+
+function showLogin(msg) {
+  stopCam(); $('scanUI').classList.add('hidden'); $('loginCard').classList.remove('hidden'); $('who').textContent = '';
+  if (msg) $('loginErr').textContent = msg.replace('AUTH: ', '');
+}
+function showScanner(user) {
+  $('loginCard').classList.add('hidden'); $('scanUI').classList.remove('hidden');
+  $('who').innerHTML = 'Gate: <b style="color:var(--green)">' + esc(user) + '</b>';
+  refreshSummary();
+}
+$('u').onchange = function () { $('uOther').classList.toggle('hidden', this.value !== '__other'); };
+$('loginBtn').onclick = function () {
+  var b = this; b.disabled = true; $('loginErr').textContent = '';
+  var user = $('u').value === '__other' ? $('uOther').value : $('u').value;
+  call('login', user, $('p').value).then(function (r) {
+    token = r.token; sessionStorage.setItem(TOKEN_KEY, token); $('p').value = ''; showScanner(r.username);
+  }).catch(function (e) { $('loginErr').textContent = e.message; }).then(function () { b.disabled = false; });
+};
+$('logoutBtn').onclick = function () { call('logout', token); sessionStorage.removeItem(TOKEN_KEY); token = ''; showLogin(); };
+$('refreshBtn').onclick = refreshSummary;
+
+function refreshSummary() {
+  call('getGateSummary', token).then(function (s) {
+    $('gPeople').textContent = s.peopleAdmitted; $('gScans').textContent = s.successfulScans; $('gRej').textContent = s.rejected;
+    $('gRecent').innerHTML = s.recent.map(function (x) {
+      return '<tr><td class="small">' + esc(x.time.substring(11)) + '</td><td>' + esc(x.ticketId || '—') + '</td><td>' + pill(x.result) + '</td><td>' + (x.persons ? x.persons + '👤' : '') + '</td></tr>';
+    }).join('');
+  }).catch(function () {});
+}
+
+/* ---------- camera ---------- */
+function camHelp(e) {
+  var m = String(e && e.name ? e.name : '') + ' ' + String(e && e.message ? e.message : e);
+  if (/NotAllowed|Permission/i.test(m)) return '<br><b>Chrome ma camera permission Allow karo:</b> address bar ma lock icon 🔒 &gt; Permissions &gt; Camera &gt; Allow, pachhi page reload kari START SCAN dabavo.';
+  if (/NotFound|Overconstrained/i.test(m)) return '<br>Phone ma camera mali nathi.';
+  if (/NotReadable|Track/i.test(m)) return '<br>Camera biji app vapre chhe – e app band karo.';
+  if (!window.isSecureContext) return '<br>Page https par kholo.';
+  return '';
+}
+function startCam() {
+  if (typeof Html5Qrcode === 'undefined') { $('camMsg').textContent = 'Scanner library failed to load (no internet?). Use Photo of QR or manual entry.'; return; }
+  if (!qr) qr = new Html5Qrcode('reader');
+  $('camMsg').textContent = 'Starting camera…';
+  qr.start({ facingMode: 'environment' }, { fps: 10, qrbox: function (w, h) { var m = Math.floor(Math.min(w, h) * 0.75); return { width: m, height: m }; } },
+    onDecoded, function () {}).then(function () {
+      scanning = true; $('camMsg').textContent = 'Point the camera at the QR code.';
+      $('startBtn').classList.add('hidden'); $('stopBtn').classList.remove('hidden');
+      try {
+        var caps = qr.getRunningTrackCameraCapabilities();
+        if (caps && caps.torchFeature && caps.torchFeature().isSupported()) $('torchBtn').classList.remove('hidden');
+      } catch (e) { }
+    }).catch(function (e) {
+      $('camMsg').innerHTML = 'Camera not available: ' + esc(e && e.message ? e.message : e) + camHelp(e) + '<br>Use <b>📸 Photo of QR</b> or <b>manual entry</b> below.';
+    });
+}
+function stopCam() {
+  if (qr && scanning) { qr.stop().catch(function () {}); }
+  scanning = false; torchOn = false;
+  $('startBtn').classList.remove('hidden'); $('stopBtn').classList.add('hidden'); $('torchBtn').classList.add('hidden');
+}
+$('startBtn').onclick = startCam;
+$('stopBtn').onclick = stopCam;
+$('torchBtn').onclick = function () {
+  try {
+    var f = qr.getRunningTrackCameraCapabilities().torchFeature();
+    torchOn = !torchOn; f.apply(torchOn).catch(function () { toast('Flashlight not supported'); });
+  } catch (e) { toast('Flashlight not supported on this phone'); }
+};
+$('photo').onchange = function () {
+  var file = this.files && this.files[0]; if (!file) return;
+  if (typeof Html5Qrcode === 'undefined') { toast('Scanner library not loaded'); return; }
+  var fr = new Html5Qrcode('filereader');
+  fr.scanFile(file, false).then(function (txt) { submitScan(txt); })
+    .catch(function () { toast('No QR found in photo. Try again closer, or type the Ticket ID.', 4000); });
+  this.value = '';
+};
+function onDecoded(text) { if (!busy) { if (qr && scanning) { try { qr.pause(true); } catch (e) {} } submitScan(text); } }
+
+$('manualBtn').onclick = function () { var v = $('manual').value.trim(); if (v) submitScan(v.indexOf('NV27.') === 0 ? v : v.toUpperCase()); };
+$('manual').addEventListener('keydown', function (e) { if (e.key === 'Enter') $('manualBtn').click(); });
+
+/* ---------- redemption (server decides, atomically) ---------- */
+function submitScan(text) {
+  if (busy) return; busy = true;
+  showResult({ result: 'CHECKING' });
+  call('scanTicket', token, text).then(showResult).catch(function (e) {
+    showResult({ result: 'BUSY', message: e.message });
+  }).then(function () { busy = false; });
+}
+function showResult(r) {
+  var el = $('result'); el.className = r.result; el.classList.remove('hidden');
+  if (r.result === 'CHECKING') { el.style.background = '#120c22'; el.innerHTML = '<div class="spinner" style="width:60px;height:60px;border-width:6px"></div><div class="big" style="font-size:26px;margin-top:20px">CHECKING…</div>'; return; }
+  el.style.background = '';
+  var t = r.ticket || {};
+  var head = {
+    SUCCESS: ['✅', 'ENTRY ALLOWED'], ALREADY_USED: ['⛔', 'ALREADY USED'], INVALID: ['❌', 'INVALID TICKET'],
+    PAYMENT_PENDING: ['💰', 'PAYMENT PENDING'], CANCELLED: ['🚫', 'TICKET CANCELLED'], BUSY: ['⚠️', 'TRY AGAIN']
+  }[r.result] || ['⚠️', r.result];
+  var html = '<div class="icon">' + head[0] + '</div><div class="big">' + head[1] + '</div>';
+  if (r.result === 'SUCCESS') html += '<div class="persons" style="margin-top:10px">ADMIT ' + r.personsAdmitted + ' ' + (r.personsAdmitted > 1 ? 'PEOPLE' : 'PERSON') + '</div>';
+  if (r.result === 'PAYMENT_PENDING') html += '<div style="font-size:20px;margin-top:8px">DO NOT ALLOW ENTRY</div>';
+  if (r.message) html += '<div style="margin-top:8px">' + esc(r.message) + '</div>';
+  if (t.ticketId) {
+    html += '<div class="info"><div>🎫 <b>' + esc(t.ticketId) + '</b> ' + (t.isTest ? '<b>(TEST)</b>' : '') + '</div>' +
+      '<div>Pass: <b>' + esc(t.passName) + '</b> – ' + esc(t.persons) + ' person(s)</div>' +
+      '<div>Name: <b>' + esc(t.customerName) + '</b></div><div>Mobile: ' + esc(t.mobile) + '</div>' +
+      '<div>Payment: <b>' + esc(t.paymentStatus) + '</b> | Entry: <b>' + esc(t.entryStatus) + '</b></div>' +
+      (r.result === 'ALREADY_USED' ? '<div>Used at <b>' + esc(t.scannedBy) + '</b> on ' + esc(t.scanTime) + '</div>' : '') +
+      '<div>Gate: ' + esc(r.gate) + ' · ' + esc(r.time || '') + '</div></div>';
+  }
+  html += '<button class="btn block bigbtn" style="max-width:420px;background:#000" id="nextBtn">SCAN NEXT</button>';
+  el.innerHTML = html;
+  if (navigator.vibrate) navigator.vibrate(r.result === 'SUCCESS' ? 200 : [300, 100, 300, 100, 300]);
+  $('nextBtn').onclick = function () {
+    el.classList.add('hidden'); $('manual').value = ''; refreshSummary();
+    if (qr && scanning) { try { qr.resume(); } catch (e) {} }
+  };
+}
+
+if (token) call('whoAmI', token).then(function (w) { showScanner(w.username); }).catch(function () { showLogin(); });
+</script>
+</body></html>
