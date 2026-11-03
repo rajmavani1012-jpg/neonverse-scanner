@@ -147,10 +147,10 @@ function pill(v) {
 
 <script>
 var TOKEN_KEY = 'nv27_scan_token';
-var token = sessionStorage.getItem(TOKEN_KEY) || '';
+var token = localStorage.getItem(TOKEN_KEY) || '';
 var qr = null, scanning = false, busy = false, torchOn = false;
 
-window.onAuthLost = function (msg) { sessionStorage.removeItem(TOKEN_KEY); token = ''; showLogin(msg); };
+window.onAuthLost = function (msg) { localStorage.removeItem(TOKEN_KEY); token = ''; showLogin(msg); };
 
 function showLogin(msg) {
   stopCam(); $('scanUI').classList.add('hidden'); $('loginCard').classList.remove('hidden'); $('who').textContent = '';
@@ -166,10 +166,10 @@ $('loginBtn').onclick = function () {
   var b = this; b.disabled = true; $('loginErr').textContent = '';
   var user = $('u').value === '__other' ? $('uOther').value : $('u').value;
   call('login', user, $('p').value).then(function (r) {
-    token = r.token; sessionStorage.setItem(TOKEN_KEY, token); $('p').value = ''; showScanner(r.username);
+    token = r.token; localStorage.setItem(TOKEN_KEY, token); $('p').value = ''; showScanner(r.username);
   }).catch(function (e) { $('loginErr').textContent = e.message; }).then(function () { b.disabled = false; });
 };
-$('logoutBtn').onclick = function () { call('logout', token); sessionStorage.removeItem(TOKEN_KEY); token = ''; showLogin(); };
+$('logoutBtn').onclick = function () { call('logout', token); localStorage.removeItem(TOKEN_KEY); token = ''; showLogin(); };
 $('refreshBtn').onclick = refreshSummary;
 
 function refreshSummary() {
